@@ -3,9 +3,9 @@ package com.hueambiance.overrides;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.hueambiance.AmbianceOverride;
-import static com.hueambiance.helpers.Colors.CYAN;
-import static com.hueambiance.helpers.Colors.GREEN;
-import static com.hueambiance.helpers.Colors.RED;
+import static com.hueambiance.helpers.ColorHelper.CYAN;
+import static com.hueambiance.helpers.ColorHelper.GREEN;
+import static com.hueambiance.helpers.ColorHelper.RED;
 import io.github.zeroone3010.yahueapi.Color;
 import io.github.zeroone3010.yahueapi.Room;
 import io.github.zeroone3010.yahueapi.State;
@@ -36,7 +36,7 @@ public class ZulrahOverride implements AmbianceOverride
 	private Client client;
 
 	@Override
-	public boolean doesOverride()
+	public boolean doesOverride(final Room room)
 	{
 		return atZulrah();
 	}

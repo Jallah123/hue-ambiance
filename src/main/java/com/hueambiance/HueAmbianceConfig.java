@@ -39,6 +39,13 @@ public interface HueAmbianceConfig extends Config
 	)
 	String bridgeSection = "bridgeSection";
 
+	@ConfigSection(
+		name = "Configuration",
+		description = "Functional configuration",
+		position = 2
+	)
+	String configSection = "configSection";
+
 	@ConfigItem(
 		keyName = "enabled",
 		name = "Enabled",
@@ -85,6 +92,18 @@ public interface HueAmbianceConfig extends Config
 	default String room()
 	{
 		return "";
+	}
+
+	@ConfigItem(
+		keyName = "prayer",
+		name = "Prayer Threshold",
+		description = "The amount of prayer points to send a notification at. A value of 0 will disable notification.",
+		position = 1,
+		section = configSection
+	)
+	default int getPrayerThreshold()
+	{
+		return 0;
 	}
 
 }

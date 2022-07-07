@@ -54,17 +54,24 @@ public class HueAmbiancePlugin extends Plugin
 	@Subscribe
 	public void onGameTick(final GameTick tick)
 	{
-		if (ambianceOverrides.getAll().stream().noneMatch(AmbianceOverride::doesOverride))
-		{
-			updateSkybox();
-		}
+		room.ifPresent(r -> {
+			final Optional<AmbianceOverride> override = ambianceOverrides.getAll().stream().filter(o -> o.doesOverride(r)).findFirst();
+			if (override.isPresent())
+			{
+				override.get().handleGameTick(tick, r);
+			}
+			else
+			{
+				updateSkybox();
+			}
+		});
 	}
 
 	@Subscribe
 	public void onNpcSpawned(final NpcSpawned npcSpawned)
 	{
 		room.ifPresent(r -> ambianceOverrides.getAll().stream()
-			.filter(AmbianceOverride::doesOverride)
+			.filter(o -> o.doesOverride(r))
 			.findFirst()
 			.ifPresent(override -> override.handleNpcSpawned(npcSpawned, r)));
 	}
@@ -73,7 +80,7 @@ public class HueAmbiancePlugin extends Plugin
 	public void onNpcChanged(final NpcChanged npcChanged)
 	{
 		room.ifPresent(r -> ambianceOverrides.getAll().stream()
-			.filter(AmbianceOverride::doesOverride)
+			.filter(o -> o.doesOverride(r))
 			.findFirst()
 			.ifPresent(override -> override.handleNpcChanged(npcChanged, r)));
 	}
@@ -102,7 +109,7 @@ public class HueAmbiancePlugin extends Plugin
 			{
 				lastSkyboxUpdate = System.currentTimeMillis();
 				final int skyboxColor = client.getSkyboxColor();
-				r.getLights().forEach(light -> light.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState()));
+				r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
 			}
 		});
 	}

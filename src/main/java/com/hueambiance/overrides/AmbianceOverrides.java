@@ -15,11 +15,15 @@ public class AmbianceOverrides
 	@Inject
 	private MessageOverride messageOverride;
 
+	@Inject
+	private PrayerOverride prayerOverride;
+
 	public Set<AmbianceOverride> getAll()
 	{
 		return ImmutableSet.of(
 			zulrahOverride,
-			messageOverride
+			messageOverride,
+			prayerOverride
 		);
 	}
 }
