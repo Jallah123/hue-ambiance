@@ -28,6 +28,7 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
+import net.runelite.client.config.Units;
 
 @ConfigGroup("Hue Ambiance")
 public interface HueAmbianceConfig extends Config
@@ -35,34 +36,22 @@ public interface HueAmbianceConfig extends Config
 	@ConfigSection(
 		name = "Hue bridge",
 		description = "Technical settings for the bridge",
-		position = 1
+		position = 0
 	)
 	String bridgeSection = "bridgeSection";
 
 	@ConfigSection(
 		name = "Configuration",
 		description = "Functional configuration",
-		position = 2
+		position = 1
 	)
 	String configSection = "configSection";
-
-	@ConfigItem(
-		keyName = "enabled",
-		name = "Enabled",
-		description = "Enables Hue Ambiance",
-		position = 0,
-		section = bridgeSection
-	)
-	default boolean enabled()
-	{
-		return true;
-	}
 
 	@ConfigItem(
 		keyName = "ip",
 		name = "Bridge ip",
 		description = "Bridge ip",
-		position = 1,
+		position = 0,
 		section = bridgeSection
 	)
 	default String bridgeIp()
@@ -74,7 +63,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "token",
 		name = "Bridge token",
 		description = "Bridge token",
-		position = 2,
+		position = 1,
 		section = bridgeSection
 	)
 	default String bridgeToken()
@@ -84,9 +73,9 @@ public interface HueAmbianceConfig extends Config
 
 	@ConfigItem(
 		keyName = "room",
-		name = "Room",
+		name = "Room name",
 		description = "The name of the room that needs to be controlled",
-		position = 3,
+		position = 2,
 		section = bridgeSection
 	)
 	default String room()
@@ -95,15 +84,75 @@ public interface HueAmbianceConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "prayer",
-		name = "Prayer Threshold",
-		description = "The amount of prayer points to send a notification at. A value of 0 will disable notification.",
+		keyName = "refreshRate",
+		name = "Skybox refresh rate",
+		description = "Amount of milliseconds that need to be between skybox updates. A call to the bridge will be done every refresh.",
+		position = 0,
+		section = configSection
+	)
+	@Units(Units.MILLISECONDS)
+	default long skyboxRefreshRate()
+	{
+		return 1000;
+	}
+
+	@ConfigItem(
+		keyName = "hp",
+		name = "HP threshold",
+		description = "The amount of hp to send a notification at. A value of 0 will disable notification.",
 		position = 1,
 		section = configSection
 	)
-	default int getPrayerThreshold()
+	default int hpThreshold()
 	{
 		return 0;
 	}
 
+	@ConfigItem(
+		keyName = "prayer",
+		name = "Prayer threshold",
+		description = "The amount of prayer points to send a notification at. A value of 0 will disable notification.",
+		position = 2,
+		section = configSection
+	)
+	default int prayerThreshold()
+	{
+		return 0;
+	}
+
+	@ConfigItem(
+		keyName = "item",
+		name = "Item price threshold",
+		description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
+		position = 3,
+		section = configSection
+	)
+	default int itemPriceThreshold()
+	{
+		return 0;
+	}
+
+	@ConfigItem(
+		keyName = "levelUp",
+		name = "Level up notifier",
+		description = "Enable firework animation on level up",
+		position = 4,
+		section = configSection
+	)
+	default boolean levelUpEnabled()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "zulrah",
+		name = "Zulrah custom ambiance",
+		description = "Enables custom ambiance colors for Zulrah",
+		position = 5,
+		section = configSection
+	)
+	default boolean zulrahEnabled()
+	{
+		return true;
+	}
 }

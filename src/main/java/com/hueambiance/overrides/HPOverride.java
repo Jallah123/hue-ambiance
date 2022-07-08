@@ -2,7 +2,7 @@ package com.hueambiance.overrides;
 
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.Colors.CYAN;
+import static com.hueambiance.helpers.Colors.RED;
 import static com.hueambiance.helpers.HueHelper.setAlert;
 import static com.hueambiance.helpers.HueHelper.stopAlert;
 import io.github.zeroone3010.yahueapi.Room;
@@ -10,10 +10,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
+import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 
 @Singleton
-public class PrayerOverride implements AmbianceOverride
+public class HPOverride implements AmbianceOverride
 {
 
 	@Inject
@@ -27,8 +28,8 @@ public class PrayerOverride implements AmbianceOverride
 	@Override
 	public boolean doesOverride(final Room room)
 	{
-		final boolean lowPrayer = checkLowPrayer();
-		if (!lowPrayer)
+		final boolean lowHP = checkLowHP();
+		if (!lowHP)
 		{
 			if (currentlyAlerting)
 			{
@@ -36,7 +37,7 @@ public class PrayerOverride implements AmbianceOverride
 			}
 			currentlyAlerting = false;
 		}
-		return lowPrayer;
+		return lowHP;
 	}
 
 	@Override
@@ -45,14 +46,14 @@ public class PrayerOverride implements AmbianceOverride
 		if (!currentlyAlerting)
 		{
 			currentlyAlerting = true;
-			setAlert(room, CYAN);
+			setAlert(room, RED);
 		}
 	}
 
-	private boolean checkLowPrayer()
+	private boolean checkLowHP()
 	{
-		return config.prayerThreshold() > 0 &&
-			client.getRealSkillLevel(Skill.PRAYER) > config.prayerThreshold() &&
-			client.getBoostedSkillLevel(Skill.PRAYER) <= config.prayerThreshold();
+		return config.hpThreshold() > 0 &&
+			client.getRealSkillLevel(Skill.HITPOINTS) > config.hpThreshold() &&
+			client.getBoostedSkillLevel(Skill.HITPOINTS) + client.getVarbitValue(Varbits.NMZ_ABSORPTION) <= config.hpThreshold();
 	}
 }

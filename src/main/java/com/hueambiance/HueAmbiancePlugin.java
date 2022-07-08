@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.ItemSpawned;
 import net.runelite.api.events.NpcChanged;
 import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.config.ConfigManager;
@@ -36,6 +37,8 @@ public class HueAmbiancePlugin extends Plugin
 	private Hue hue;
 	private Optional<Room> room;
 	private long lastSkyboxUpdate;
+
+	private static final long NANO_SECOND_MULTIPLIER = 1_000_000;
 
 	@Override
 	protected void startUp()
@@ -67,6 +70,18 @@ public class HueAmbiancePlugin extends Plugin
 		});
 	}
 
+	private void updateSkybox()
+	{
+		room.ifPresent(r -> {
+			if (System.nanoTime() - lastSkyboxUpdate > (config.skyboxRefreshRate() * NANO_SECOND_MULTIPLIER))
+			{
+				lastSkyboxUpdate = System.nanoTime();
+				final int skyboxColor = client.getSkyboxColor();
+				r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
+			}
+		});
+	}
+
 	@Subscribe
 	public void onNpcSpawned(final NpcSpawned npcSpawned)
 	{
@@ -92,26 +107,24 @@ public class HueAmbiancePlugin extends Plugin
 	}
 
 	@Subscribe
+	public void onItemSpawned(final ItemSpawned itemSpawned)
+	{
+		room.ifPresent(r -> ambianceOverrides.getAll().forEach(override -> override.handleItemSpawned(itemSpawned, r)));
+	}
+
+	@Subscribe
 	public void onConfigChanged(final ConfigChanged configChanged)
 	{
 		final String key = configChanged.getKey();
 		if (key.equals("ip") || key.equals("token"))
 		{
 			hue = new Hue(config.bridgeIp(), config.bridgeToken());
+			room = hue.getRoomByName(config.room());
 		}
-		room = hue.getRoomByName(config.room());
-	}
-
-	private void updateSkybox()
-	{
-		room.ifPresent(r -> {
-			if (System.currentTimeMillis() - lastSkyboxUpdate > 1000L)
-			{
-				lastSkyboxUpdate = System.currentTimeMillis();
-				final int skyboxColor = client.getSkyboxColor();
-				r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
-			}
-		});
+		else if (key.equals("room"))
+		{
+			room = hue.getRoomByName(config.room());
+		}
 	}
 
 	@Provides

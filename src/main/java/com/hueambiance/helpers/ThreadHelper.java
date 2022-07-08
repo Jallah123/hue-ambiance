@@ -7,6 +7,11 @@ public class ThreadHelper
 {
 	private static final ExecutorService backgroundExecutor = Executors.newSingleThreadExecutor();
 
+	public static void executeOnBackGround(final Runnable runnable)
+	{
+		backgroundExecutor.submit(runnable);
+	}
+
 	public static void executeOnBackGround(final Runnable runnable, final Runnable callback)
 	{
 		backgroundExecutor.submit(() -> {

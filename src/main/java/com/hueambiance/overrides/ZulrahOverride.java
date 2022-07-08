@@ -3,12 +3,13 @@ package com.hueambiance.overrides;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.hueambiance.AmbianceOverride;
-import static com.hueambiance.helpers.ColorHelper.CYAN;
-import static com.hueambiance.helpers.ColorHelper.GREEN;
-import static com.hueambiance.helpers.ColorHelper.RED;
+import com.hueambiance.HueAmbianceConfig;
+import static com.hueambiance.helpers.Colors.CYAN;
+import static com.hueambiance.helpers.Colors.GREEN;
+import static com.hueambiance.helpers.Colors.RED;
+import static com.hueambiance.helpers.HueHelper.setColor;
 import io.github.zeroone3010.yahueapi.Color;
 import io.github.zeroone3010.yahueapi.Room;
-import io.github.zeroone3010.yahueapi.State;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
@@ -35,28 +36,37 @@ public class ZulrahOverride implements AmbianceOverride
 	@Inject
 	private Client client;
 
+	@Inject
+	private HueAmbianceConfig config;
+
 	@Override
 	public boolean doesOverride(final Room room)
 	{
-		return atZulrah();
+		return config.zulrahEnabled() && atZulrah();
 	}
 
 	@Override
 	public void handleNpcSpawned(final NpcSpawned npcSpawned, final Room room)
 	{
-		final NPC npc = npcSpawned.getNpc();
-		if (ZULRAH == npc.getId())
+		if (config.zulrahEnabled())
 		{
-			room.setState(State.builder().color(ZULRAH_COLORS.get(ZULRAH)).keepCurrentState());
+			final NPC npc = npcSpawned.getNpc();
+			if (ZULRAH == npc.getId())
+			{
+				setColor(room, ZULRAH_COLORS.get(ZULRAH));
+			}
 		}
 	}
 
 	@Override
 	public void handleNpcChanged(final NpcChanged npcChanged, final Room room)
 	{
-		if (ZULRAH_COLORS.containsKey(npcChanged.getNpc().getId()))
+		if (config.zulrahEnabled())
 		{
-			room.setState(State.builder().color(ZULRAH_COLORS.get(npcChanged.getNpc().getId())).keepCurrentState());
+			if (ZULRAH_COLORS.containsKey(npcChanged.getNpc().getId()))
+			{
+				setColor(room, ZULRAH_COLORS.get(npcChanged.getNpc().getId()));
+			}
 		}
 	}
 
