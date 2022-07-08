@@ -5,6 +5,7 @@ import com.hueambiance.HueAmbianceConfig;
 import static com.hueambiance.helpers.HueHelper.setAlert;
 import static com.hueambiance.helpers.HueHelper.stopAlert;
 import io.github.zeroone3010.yahueapi.Room;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Client;
