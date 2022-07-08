@@ -4,12 +4,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.Colors.CYAN;
-import static com.hueambiance.helpers.Colors.GREEN;
-import static com.hueambiance.helpers.Colors.RED;
 import static com.hueambiance.helpers.HueHelper.setColor;
-import io.github.zeroone3010.yahueapi.Color;
 import io.github.zeroone3010.yahueapi.Room;
+import java.awt.Color;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
@@ -28,9 +25,9 @@ public class ZulrahOverride implements AmbianceOverride
 {
 	private static final Set<Integer> ZULRAH_REGIONS = ImmutableSet.of(9007, 9008);
 	private static final Map<Integer, Color> ZULRAH_COLORS = ImmutableMap.of(
-		ZULRAH, GREEN,
-		ZULRAH_2043, RED,
-		ZULRAH_2044, CYAN
+		ZULRAH, Color.GREEN,
+		ZULRAH_2043, Color.RED,
+		ZULRAH_2044, Color.CYAN
 	);
 
 	@Inject

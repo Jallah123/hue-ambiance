@@ -1,7 +1,6 @@
 package com.hueambiance.helpers;
 
 import static com.hueambiance.helpers.Colors.FIRE_WORKS_COLORS;
-import static com.hueambiance.helpers.Colors.RED;
 import static com.hueambiance.helpers.ThreadHelper.executeOnBackGround;
 import io.github.zeroone3010.yahueapi.Color;
 import io.github.zeroone3010.yahueapi.Room;
@@ -17,7 +16,7 @@ public class HueHelper
 	public static void performFireWorks(final Room room, final Runnable callback)
 	{
 		executeForDuration(() -> FIRE_WORKS_COLORS.forEach(color -> {
-				room.setState(State.builder().color(RED).keepCurrentState());
+				room.setState(State.builder().color(color).keepCurrentState());
 				try
 				{
 					Thread.sleep(250);
@@ -30,16 +29,16 @@ public class HueHelper
 		), Duration.ofSeconds(5), callback);
 	}
 
-	public static void setColor(final Room room, final Color color)
+	public static void setColor(final Room room, final java.awt.Color color)
 	{
-		executeOnBackGround(() -> room.setState(State.builder().color(color).keepCurrentState()));
+		executeOnBackGround(() -> room.setState(State.builder().color(Color.of(color)).keepCurrentState()));
 	}
 
-	public static void setAlert(final Room room, final Color color)
+	public static void setAlert(final Room room, final java.awt.Color color)
 	{
 		executeOnBackGround(() -> {
 			room.setState(State.LONG_ALERT);
-			room.setState(State.builder().color(color).keepCurrentState());
+			room.setState(State.builder().color(Color.of(color)).keepCurrentState());
 		});
 	}
 
@@ -48,10 +47,10 @@ public class HueHelper
 		executeOnBackGround(() -> room.setState(State.NO_ALERT));
 	}
 
-	public static void setColorForDuration(final Room room, final Color color, final Duration duration, final Runnable callback)
+	public static void setColorForDuration(final Room room, final java.awt.Color color, final Duration duration, final Runnable callback)
 	{
 		executeOnBackGround(() -> {
-			room.setState(State.builder().color(color).keepCurrentState());
+			room.setState(State.builder().color(Color.of(color)).keepCurrentState());
 			try
 			{
 				Thread.sleep(duration.toMillis());

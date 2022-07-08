@@ -2,8 +2,6 @@ package com.hueambiance.overrides;
 
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.Colors.CYAN;
-import static com.hueambiance.helpers.Colors.PURPLE;
 import static com.hueambiance.helpers.HueHelper.performFireWorks;
 import static com.hueambiance.helpers.HueHelper.setColorForDuration;
 import io.github.zeroone3010.yahueapi.Room;
@@ -62,12 +60,12 @@ public class MessageOverride implements AmbianceOverride
 			if (message.contains("Enhanced crystal weapon seed"))
 			{
 				startAction();
-				setColorForDuration(room, PURPLE, Duration.ofSeconds(5), stopAction());
+				setColorForDuration(room, config.cgEnhanced(), Duration.ofSeconds(5), stopAction());
 			}
 			else if (message.contains("Crystal armour seed"))
 			{
 				startAction();
-				setColorForDuration(room, CYAN, Duration.ofSeconds(5), stopAction());
+				setColorForDuration(room, config.cgArmour(), Duration.ofSeconds(5), stopAction());
 			}
 		}
 	}
@@ -77,7 +75,7 @@ public class MessageOverride implements AmbianceOverride
 		if (message.contains("Special loot"))
 		{
 			startAction();
-			setColorForDuration(room, PURPLE, Duration.ofSeconds(15), stopAction());
+			setColorForDuration(room, config.coxColor(), Duration.ofSeconds(15), stopAction());
 		}
 	}
 

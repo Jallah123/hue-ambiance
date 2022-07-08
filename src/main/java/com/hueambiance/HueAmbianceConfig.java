@@ -24,6 +24,8 @@
  */
 package com.hueambiance;
 
+import java.awt.Color;
+import net.runelite.client.config.Alpha;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -46,6 +48,13 @@ public interface HueAmbianceConfig extends Config
 		position = 1
 	)
 	String configSection = "configSection";
+
+	@ConfigSection(
+		name = "Colors",
+		description = "Color configuration",
+		position = 2
+	)
+	String colorSection = "colorSection";
 
 	@ConfigItem(
 		keyName = "ip",
@@ -86,12 +95,12 @@ public interface HueAmbianceConfig extends Config
 	@ConfigItem(
 		keyName = "refreshRate",
 		name = "Skybox refresh rate",
-		description = "Amount of milliseconds that need to be between skybox updates. A call to the bridge will be done every refresh.",
+		description = "Amount of milliseconds that need to be between skybox updates. A call to the bridge will be done every refresh. A value of 0 will disable skybox refresh",
 		position = 0,
 		section = configSection
 	)
 	@Units(Units.MILLISECONDS)
-	default long skyboxRefreshRate()
+	default int skyboxRefreshRate()
 	{
 		return 1000;
 	}
@@ -154,5 +163,83 @@ public interface HueAmbianceConfig extends Config
 	default boolean zulrahEnabled()
 	{
 		return true;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "hpColor",
+		name = "HP",
+		description = "Color when low hp",
+		position = 0,
+		section = colorSection
+	)
+	default Color lowHpColor()
+	{
+		return Color.RED;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "prayerColor",
+		name = "Prayer",
+		description = "Color when low prayer",
+		position = 1,
+		section = colorSection
+	)
+	default Color lowPrayerColor()
+	{
+		return Color.CYAN;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "itemColor",
+		name = "Item",
+		description = "Color when drop received",
+		position = 2,
+		section = colorSection
+	)
+	default Color itemColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "coxColor",
+		name = "Cox unique",
+		description = "Color when drop received",
+		position = 3,
+		section = colorSection
+	)
+	default Color coxColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "cgEnhanced",
+		name = "CG enhanced seed",
+		description = "Color when enhanced weapon seed",
+		position = 4,
+		section = colorSection
+	)
+	default Color cgEnhanced()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "cgArmour",
+		name = "CG armour seed",
+		description = "Color when armour seed is received",
+		position = 5,
+		section = colorSection
+	)
+	default Color cgArmour()
+	{
+		return Color.CYAN;
 	}
 }

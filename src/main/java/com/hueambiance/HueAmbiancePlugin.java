@@ -38,7 +38,7 @@ public class HueAmbiancePlugin extends Plugin
 	private Optional<Room> room;
 	private long lastSkyboxUpdate;
 
-	private static final long NANO_SECOND_MULTIPLIER = 1_000_000;
+	private static final long NANO_SECOND_MULTIPLIER = 1_000_000L;
 
 	@Override
 	protected void startUp()
@@ -73,13 +73,18 @@ public class HueAmbiancePlugin extends Plugin
 	private void updateSkybox()
 	{
 		room.ifPresent(r -> {
-			if (System.nanoTime() - lastSkyboxUpdate > (config.skyboxRefreshRate() * NANO_SECOND_MULTIPLIER))
+			final long skyboxRefreshRate = config.skyboxRefreshRate();
+			if (skyboxRefreshRate > 0)
 			{
-				lastSkyboxUpdate = System.nanoTime();
-				final int skyboxColor = client.getSkyboxColor();
-				r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
+				if (System.nanoTime() - lastSkyboxUpdate > (skyboxRefreshRate * NANO_SECOND_MULTIPLIER))
+				{
+					lastSkyboxUpdate = System.nanoTime();
+					final int skyboxColor = client.getSkyboxColor();
+					r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
+				}
 			}
 		});
+
 	}
 
 	@Subscribe

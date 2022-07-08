@@ -2,7 +2,6 @@ package com.hueambiance.overrides;
 
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.Colors.CYAN;
 import static com.hueambiance.helpers.HueHelper.setAlert;
 import static com.hueambiance.helpers.HueHelper.stopAlert;
 import io.github.zeroone3010.yahueapi.Room;
@@ -45,7 +44,7 @@ public class PrayerOverride implements AmbianceOverride
 		if (!currentlyAlerting)
 		{
 			currentlyAlerting = true;
-			setAlert(room, CYAN);
+			setAlert(room, config.lowPrayerColor());
 		}
 	}
 
