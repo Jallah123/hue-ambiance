@@ -9,8 +9,10 @@ import io.github.zeroone3010.yahueapi.Room;
 import io.github.zeroone3010.yahueapi.State;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.CommandExecuted;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemSpawned;
 import net.runelite.api.events.NpcChanged;
@@ -129,6 +131,23 @@ public class HueAmbiancePlugin extends Plugin
 		else if (key.equals("room"))
 		{
 			room = hue.getRoomByName(config.room());
+		}
+	}
+
+	@Subscribe
+	public void onCommandExecuted(CommandExecuted commandExecuted)
+	{
+		if (commandExecuted.getCommand().equals("testlights"))
+		{
+			if (room.isPresent())
+			{
+				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Your smart lights are currently connected.", "");
+			}
+			else
+			{
+				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Your smart lights are not connected.", "");
+
+			}
 		}
 	}
 
