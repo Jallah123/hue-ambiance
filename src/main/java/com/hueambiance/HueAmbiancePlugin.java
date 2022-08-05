@@ -37,16 +37,16 @@ public class HueAmbiancePlugin extends Plugin
 	private AmbianceOverrides ambianceOverrides;
 
 	private Hue hue;
-	private Optional<Room> room;
+	private Optional<Room> room = Optional.empty();
 	private long lastSkyboxUpdate;
+	private boolean colorChanged = false;
 
 	private static final long NANO_SECOND_MULTIPLIER = 1_000_000L;
 
 	@Override
 	protected void startUp()
 	{
-		hue = new Hue(config.bridgeIp(), config.bridgeToken());
-		room = hue.getRoomByName(config.room());
+		initHue();
 	}
 
 	@Override
@@ -64,6 +64,7 @@ public class HueAmbiancePlugin extends Plugin
 			if (override.isPresent())
 			{
 				override.get().handleGameTick(tick, r);
+				colorChanged = true;
 			}
 			else
 			{
@@ -78,11 +79,19 @@ public class HueAmbiancePlugin extends Plugin
 			final long skyboxRefreshRate = config.skyboxRefreshRate();
 			if (skyboxRefreshRate > 0)
 			{
+				colorChanged = true;
 				if (System.nanoTime() - lastSkyboxUpdate > (skyboxRefreshRate * NANO_SECOND_MULTIPLIER))
 				{
 					lastSkyboxUpdate = System.nanoTime();
 					final int skyboxColor = client.getSkyboxColor();
 					r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
+				}
+			}
+			else
+			{
+				if (colorChanged)
+				{
+					setDefaultHueColor();
 				}
 			}
 		});
@@ -123,14 +132,18 @@ public class HueAmbiancePlugin extends Plugin
 	public void onConfigChanged(final ConfigChanged configChanged)
 	{
 		final String key = configChanged.getKey();
-		if (key.equals("ip") || key.equals("token"))
+		switch (key)
 		{
-			hue = new Hue(config.bridgeIp(), config.bridgeToken());
-			room = hue.getRoomByName(config.room());
-		}
-		else if (key.equals("room"))
-		{
-			room = hue.getRoomByName(config.room());
+			case "ip":
+			case "token":
+				initHue();
+				break;
+			case "room":
+				initRoom();
+				break;
+			case "defaultColor":
+				setDefaultHueColor();
+				break;
 		}
 	}
 
@@ -155,5 +168,29 @@ public class HueAmbiancePlugin extends Plugin
 	HueAmbianceConfig provideConfig(final ConfigManager configManager)
 	{
 		return configManager.getConfig(HueAmbianceConfig.class);
+	}
+
+	private void initHue()
+	{
+		if (config.bridgeIp() != null && config.bridgeToken() != null)
+		{
+			hue = new Hue(config.bridgeIp(), config.bridgeToken());
+			initRoom();
+		}
+	}
+
+	private void initRoom()
+	{
+		if (config.room() != null)
+		{
+			room = hue.getRoomByName(config.room());
+			room.ifPresent(r -> r.setState(State.builder().color(Color.of(config.defaultHueColor())).keepCurrentState()));
+		}
+	}
+
+	private void setDefaultHueColor()
+	{
+		colorChanged = false;
+		room.ifPresent(r -> r.setState(State.builder().color(Color.of(config.defaultHueColor())).keepCurrentState()));
 	}
 }

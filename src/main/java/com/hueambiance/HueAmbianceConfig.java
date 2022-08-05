@@ -167,10 +167,23 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
+		keyName = "defaultColor",
+		name = "Default",
+		description = "Default color to use when skybox is not enabled",
+		position = 0,
+		section = colorSection
+	)
+	default Color defaultHueColor()
+	{
+		return Color.WHITE;
+	}
+
+	@Alpha
+	@ConfigItem(
 		keyName = "hpColor",
 		name = "HP",
 		description = "Color when low hp",
-		position = 0,
+		position = 1,
 		section = colorSection
 	)
 	default Color lowHpColor()
@@ -183,7 +196,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "prayerColor",
 		name = "Prayer",
 		description = "Color when low prayer",
-		position = 1,
+		position = 2,
 		section = colorSection
 	)
 	default Color lowPrayerColor()
@@ -196,7 +209,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "itemColor",
 		name = "Item",
 		description = "Color when drop received",
-		position = 2,
+		position = 3,
 		section = colorSection
 	)
 	default Color itemColor()
@@ -209,7 +222,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "coxColor",
 		name = "Cox unique",
 		description = "Color when drop received",
-		position = 3,
+		position = 4,
 		section = colorSection
 	)
 	default Color coxColor()
@@ -222,7 +235,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "cgEnhanced",
 		name = "CG enhanced seed",
 		description = "Color when enhanced weapon seed",
-		position = 4,
+		position = 5,
 		section = colorSection
 	)
 	default Color cgEnhanced()
@@ -235,7 +248,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "cgArmour",
 		name = "CG armour seed",
 		description = "Color when armour seed is received",
-		position = 5,
+		position = 6,
 		section = colorSection
 	)
 	default Color cgArmour()
