@@ -2,8 +2,7 @@ package com.hueambiance.overrides;
 
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.HueHelper.setAlert;
-import static com.hueambiance.helpers.HueHelper.stopAlert;
+import com.hueambiance.helpers.HueHelper;
 import io.github.zeroone3010.yahueapi.Room;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,6 +20,9 @@ public class PrayerOverride implements AmbianceOverride
 	@Inject
 	private Client client;
 
+	@Inject
+	private HueHelper hueHelper;
+
 	private boolean currentlyAlerting = false;
 
 	@Override
@@ -31,7 +33,7 @@ public class PrayerOverride implements AmbianceOverride
 		{
 			if (currentlyAlerting)
 			{
-				stopAlert(room);
+				hueHelper.stopAlert(room);
 			}
 			currentlyAlerting = false;
 		}
@@ -44,7 +46,7 @@ public class PrayerOverride implements AmbianceOverride
 		if (!currentlyAlerting)
 		{
 			currentlyAlerting = true;
-			setAlert(room, config.lowPrayerColor());
+			hueHelper.setAlert(room, config.lowPrayerColor());
 		}
 	}
 

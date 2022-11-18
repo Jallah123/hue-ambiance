@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.HueHelper.setColor;
+import com.hueambiance.helpers.HueHelper;
 import io.github.zeroone3010.yahueapi.Room;
 import java.awt.Color;
 import java.util.Map;
@@ -36,6 +36,9 @@ public class ZulrahOverride implements AmbianceOverride
 	@Inject
 	private HueAmbianceConfig config;
 
+	@Inject
+	private HueHelper hueHelper;
+
 	@Override
 	public boolean doesOverride(final Room room)
 	{
@@ -50,7 +53,7 @@ public class ZulrahOverride implements AmbianceOverride
 			final NPC npc = npcSpawned.getNpc();
 			if (ZULRAH == npc.getId())
 			{
-				setColor(room, ZULRAH_COLORS.get(ZULRAH));
+				hueHelper.setColor(room, ZULRAH_COLORS.get(ZULRAH));
 			}
 		}
 	}
@@ -62,7 +65,7 @@ public class ZulrahOverride implements AmbianceOverride
 		{
 			if (ZULRAH_COLORS.containsKey(npcChanged.getNpc().getId()))
 			{
-				setColor(room, ZULRAH_COLORS.get(npcChanged.getNpc().getId()));
+				hueHelper.setColor(room, ZULRAH_COLORS.get(npcChanged.getNpc().getId()));
 			}
 		}
 	}

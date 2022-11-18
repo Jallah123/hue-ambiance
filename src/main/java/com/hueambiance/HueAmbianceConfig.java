@@ -93,10 +93,23 @@ public interface HueAmbianceConfig extends Config
 	}
 
 	@ConfigItem(
+			keyName = "brightness",
+			name = "Brightness",
+			description = "Brightness of the lamps in the room in percentages",
+			position = 0,
+			section = configSection
+	)
+	@Units(Units.PERCENT)
+	default int brightness()
+	{
+		return 75;
+	}
+
+	@ConfigItem(
 		keyName = "refreshRate",
 		name = "Skybox refresh rate",
 		description = "Amount of milliseconds that need to be between skybox updates. A call to the bridge will be done every refresh. A value of 0 will disable skybox refresh",
-		position = 0,
+		position = 1,
 		section = configSection
 	)
 	@Units(Units.MILLISECONDS)
@@ -109,7 +122,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "hp",
 		name = "HP threshold",
 		description = "The amount of hp to send a notification at. A value of 0 will disable notification.",
-		position = 1,
+		position = 2,
 		section = configSection
 	)
 	default int hpThreshold()
@@ -121,7 +134,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "prayer",
 		name = "Prayer threshold",
 		description = "The amount of prayer points to send a notification at. A value of 0 will disable notification.",
-		position = 2,
+		position = 3,
 		section = configSection
 	)
 	default int prayerThreshold()
@@ -133,7 +146,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "item",
 		name = "Item price threshold",
 		description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
-		position = 3,
+		position = 4,
 		section = configSection
 	)
 	default int itemPriceThreshold()
@@ -145,7 +158,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "levelUp",
 		name = "Level up notifier",
 		description = "Enable firework animation on level up",
-		position = 4,
+		position = 5,
 		section = configSection
 	)
 	default boolean levelUpEnabled()
@@ -157,7 +170,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "zulrah",
 		name = "Zulrah custom ambiance",
 		description = "Enables custom ambiance colors for Zulrah",
-		position = 5,
+		position = 6,
 		section = configSection
 	)
 	default boolean zulrahEnabled()

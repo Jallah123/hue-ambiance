@@ -2,7 +2,7 @@ package com.hueambiance.overrides;
 
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.HueHelper.setColorForDuration;
+import com.hueambiance.helpers.HueHelper;
 import io.github.zeroone3010.yahueapi.Room;
 import java.time.Duration;
 import javax.inject.Inject;
@@ -18,6 +18,9 @@ public class ItemOverride implements AmbianceOverride
 
 	@Inject
 	private ItemManager itemManager;
+
+	@Inject
+	private HueHelper hueHelper;
 
 	private boolean active = false;
 
@@ -37,7 +40,7 @@ public class ItemOverride implements AmbianceOverride
 			if (price >= itemPriceThreshold)
 			{
 				active = true;
-				setColorForDuration(room, config.itemColor(), Duration.ofSeconds(5), () -> active = false);
+				hueHelper.setColorForDuration(room, config.itemColor(), Duration.ofSeconds(5), () -> active = false);
 			}
 		}
 	}

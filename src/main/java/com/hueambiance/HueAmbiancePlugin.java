@@ -2,11 +2,11 @@ package com.hueambiance;
 
 import com.google.inject.Inject;
 import com.google.inject.Provides;
+import com.hueambiance.helpers.HueHelper;
 import com.hueambiance.overrides.AmbianceOverrides;
-import io.github.zeroone3010.yahueapi.Color;
 import io.github.zeroone3010.yahueapi.Hue;
 import io.github.zeroone3010.yahueapi.Room;
-import io.github.zeroone3010.yahueapi.State;
+import java.awt.Color;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
@@ -35,6 +35,8 @@ public class HueAmbiancePlugin extends Plugin
 	private HueAmbianceConfig config;
 	@Inject
 	private AmbianceOverrides ambianceOverrides;
+	@Inject
+	private HueHelper hueHelper;
 
 	private Hue hue;
 	private Optional<Room> room = Optional.empty();
@@ -84,7 +86,7 @@ public class HueAmbiancePlugin extends Plugin
 				{
 					lastSkyboxUpdate = System.nanoTime();
 					final int skyboxColor = client.getSkyboxColor();
-					r.setState(State.builder().color(Color.of(skyboxColor)).keepCurrentState());
+					hueHelper.setColor(r, new Color(skyboxColor));
 				}
 			}
 			else
@@ -142,7 +144,8 @@ public class HueAmbiancePlugin extends Plugin
 				initRoom();
 				break;
 			case "defaultColor":
-				setDefaultHueColor();
+			case "brightness":
+				colorChanged = true;
 				break;
 		}
 	}
@@ -184,13 +187,13 @@ public class HueAmbiancePlugin extends Plugin
 		if (config.room() != null)
 		{
 			room = hue.getRoomByName(config.room());
-			room.ifPresent(r -> r.setState(State.builder().color(Color.of(config.defaultHueColor())).keepCurrentState()));
+			setDefaultHueColor();
 		}
 	}
 
 	private void setDefaultHueColor()
 	{
 		colorChanged = false;
-		room.ifPresent(r -> r.setState(State.builder().color(Color.of(config.defaultHueColor())).keepCurrentState()));
+		room.ifPresent(r -> hueHelper.setColor(r, config.defaultHueColor()));
 	}
 }

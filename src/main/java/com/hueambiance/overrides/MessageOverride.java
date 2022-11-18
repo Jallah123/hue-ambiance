@@ -2,8 +2,7 @@ package com.hueambiance.overrides;
 
 import com.hueambiance.AmbianceOverride;
 import com.hueambiance.HueAmbianceConfig;
-import static com.hueambiance.helpers.HueHelper.performFireWorks;
-import static com.hueambiance.helpers.HueHelper.setColorForDuration;
+import com.hueambiance.helpers.HueHelper;
 import io.github.zeroone3010.yahueapi.Room;
 import java.time.Duration;
 import javax.inject.Inject;
@@ -21,6 +20,9 @@ public class MessageOverride implements AmbianceOverride
 
 	@Inject
 	private HueAmbianceConfig config;
+
+	@Inject
+	private HueHelper hueHelper;
 
 	private boolean active = false;
 
@@ -52,7 +54,7 @@ public class MessageOverride implements AmbianceOverride
 			if (config.levelUpEnabled())
 			{
 				startAction();
-				performFireWorks(room, stopAction());
+				hueHelper.performFireWorks(room, stopAction());
 			}
 		}
 		else if (client.getLocalPlayer().getName() != null && message.contains(client.getLocalPlayer().getName()))
@@ -60,12 +62,12 @@ public class MessageOverride implements AmbianceOverride
 			if (message.contains("Enhanced crystal weapon seed"))
 			{
 				startAction();
-				setColorForDuration(room, config.cgEnhanced(), Duration.ofSeconds(5), stopAction());
+				hueHelper.setColorForDuration(room, config.cgEnhanced(), Duration.ofSeconds(5), stopAction());
 			}
 			else if (message.contains("Crystal armour seed"))
 			{
 				startAction();
-				setColorForDuration(room, config.cgArmour(), Duration.ofSeconds(5), stopAction());
+				hueHelper.setColorForDuration(room, config.cgArmour(), Duration.ofSeconds(5), stopAction());
 			}
 		}
 	}
@@ -75,7 +77,7 @@ public class MessageOverride implements AmbianceOverride
 		if (message.contains("Special loot"))
 		{
 			startAction();
-			setColorForDuration(room, config.coxColor(), Duration.ofSeconds(15), stopAction());
+			hueHelper.setColorForDuration(room, config.coxColor(), Duration.ofSeconds(15), stopAction());
 		}
 	}
 
