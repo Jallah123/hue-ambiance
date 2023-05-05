@@ -57,9 +57,9 @@ public interface HueAmbianceConfig extends Config
 	String colorSection = "colorSection";
 
 	@ConfigSection(
-			name = "Raids",
-			description = "Raid configuration",
-			position = 3
+		name = "Raids",
+		description = "Raid configuration",
+		position = 3
 	)
 	String raidsSection = "raidsSections";
 
@@ -100,11 +100,11 @@ public interface HueAmbianceConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "brightness",
-			name = "Brightness",
-			description = "Brightness of the lamps in the room in percentages",
-			position = 0,
-			section = configSection
+		keyName = "brightness",
+		name = "Brightness",
+		description = "Brightness of the lamps in the room in percentages",
+		position = 0,
+		section = configSection
 	)
 	@Units(Units.PERCENT)
 	default int brightness()
@@ -162,11 +162,11 @@ public interface HueAmbianceConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "itemMedium",
-			name = "Medium item price threshold",
-			description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
-			position = 5,
-			section = configSection
+		keyName = "itemMedium",
+		name = "Medium item price threshold",
+		description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
+		position = 5,
+		section = configSection
 	)
 	default int mediumItemPriceThreshold()
 	{
@@ -174,11 +174,11 @@ public interface HueAmbianceConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "itemHigh",
-			name = "High item price threshold",
-			description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
-			position = 6,
-			section = configSection
+		keyName = "itemHigh",
+		name = "High item price threshold",
+		description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
+		position = 6,
+		section = configSection
 	)
 	default int highItemPriceThreshold()
 	{
@@ -263,11 +263,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "itemMediumColor",
-			name = "Item medium",
-			description = "Color when medium value drop received",
-			position = 4,
-			section = colorSection
+		keyName = "itemMediumColor",
+		name = "Item medium",
+		description = "Color when medium value drop received",
+		position = 4,
+		section = colorSection
 	)
 	default Color itemMediumColor()
 	{
@@ -276,11 +276,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "itemHighColor",
-			name = "Item high",
-			description = "Color when high value drop received",
-			position = 5,
-			section = colorSection
+		keyName = "itemHighColor",
+		name = "Item high",
+		description = "Color when high value drop received",
+		position = 5,
+		section = colorSection
 	)
 	default Color itemHighColor()
 	{
@@ -314,11 +314,11 @@ public interface HueAmbianceConfig extends Config
 	}
 	@Alpha
 	@ConfigItem(
-			keyName = "coxOtherPurple",
-			name = "Cox show others drop",
-			description = "Also display color when it's not your drop.",
-			position = 0,
-			section = raidsSection
+		keyName = "coxOtherPurple",
+		name = "Cox show others drop",
+		description = "Also display color when it's not your drop.",
+		position = 0,
+		section = raidsSection
 	)
 	default boolean coxShowOthersPurple()
 	{
@@ -326,11 +326,11 @@ public interface HueAmbianceConfig extends Config
 	}
 	@Alpha
 	@ConfigItem(
-			keyName = "coxColor",
-			name = "Cox drop color",
-			description = "Color when drop received",
-			position = 1,
-			section = raidsSection
+		keyName = "coxColor",
+		name = "Cox drop color",
+		description = "Color when drop received",
+		position = 1,
+		section = raidsSection
 	)
 	default Color coxColor()
 	{
@@ -339,11 +339,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "coxOthersColor",
-			name = "Cox other drop color",
-			description = "Color when someone else received a drop",
-			position = 1,
-			section = raidsSection
+		keyName = "coxOthersColor",
+		name = "Cox other drop color",
+		description = "Color when someone else received a drop",
+		position = 1,
+		section = raidsSection
 	)
 	default Color coxOthersColor()
 	{
@@ -352,11 +352,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "tobOtherPurple",
-			name = "Tob show others drop",
-			description = "Also display color when it's not your drop.",
-			position = 4,
-			section = raidsSection
+		keyName = "tobOtherPurple",
+		name = "Tob show others drop",
+		description = "Also display color when it's not your drop.",
+		position = 4,
+		section = raidsSection
 	)
 	default boolean tobShowOthersPurple()
 	{
@@ -364,11 +364,11 @@ public interface HueAmbianceConfig extends Config
 	}
 	@Alpha
 	@ConfigItem(
-			keyName = "tobColor",
-			name = "Tob drop color",
-			description = "Color when drop received",
-			position = 5,
-			section = raidsSection
+		keyName = "tobColor",
+		name = "Tob drop color",
+		description = "Color when drop received",
+		position = 5,
+		section = raidsSection
 	)
 	default Color tobColor()
 	{
@@ -377,11 +377,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "tobOthersColor",
-			name = "Tob other drop color",
-			description = "Color when someone else received a drop",
-			position = 6,
-			section = raidsSection
+		keyName = "tobOthersColor",
+		name = "Tob other drop color",
+		description = "Color when someone else received a drop",
+		position = 6,
+		section = raidsSection
 	)
 	default Color tobOthersColor()
 	{
@@ -390,11 +390,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "toaOtherPurple",
-			name = "Toa show others drop",
-			description = "Also display color when it's not your drop.",
-			position = 7,
-			section = raidsSection
+		keyName = "toaOtherPurple",
+		name = "Toa show others drop",
+		description = "Also display color when it's not your drop.",
+		position = 7,
+		section = raidsSection
 	)
 	default boolean toaShowOthersPurple()
 	{
@@ -402,11 +402,11 @@ public interface HueAmbianceConfig extends Config
 	}
 	@Alpha
 	@ConfigItem(
-			keyName = "toaColor",
-			name = "Toa drop color",
-			description = "Color when drop received",
-			position = 8,
-			section = raidsSection
+		keyName = "toaColor",
+		name = "Toa drop color",
+		description = "Color when drop received",
+		position = 8,
+		section = raidsSection
 	)
 	default Color toaColor()
 	{
@@ -415,11 +415,11 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-			keyName = "toaOthersColor",
-			name = "Toa other drop color",
-			description = "Color when someone else received a drop",
-			position = 9,
-			section = raidsSection
+		keyName = "toaOthersColor",
+		name = "Toa other drop color",
+		description = "Color when someone else received a drop",
+		position = 9,
+		section = raidsSection
 	)
 	default Color toaOthersColor()
 	{
