@@ -12,7 +12,7 @@ import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 
 @Singleton
-public class HPOverride implements AmbianceOverride
+public class HpOverride implements AmbianceOverride
 {
 
 	@Inject
@@ -25,6 +25,7 @@ public class HPOverride implements AmbianceOverride
 	private HueHelper hueHelper;
 
 	private boolean currentlyAlerting = false;
+	private long lastAlert = 0;
 
 	@Override
 	public boolean doesOverride(final Room room)
@@ -44,9 +45,11 @@ public class HPOverride implements AmbianceOverride
 	@Override
 	public void handleGameTick(final GameTick gameTick, final Room room)
 	{
-		if (!currentlyAlerting)
+		final long currentTime = System.currentTimeMillis();
+		if (!currentlyAlerting || currentTime - lastAlert > 10_000L)
 		{
 			currentlyAlerting = true;
+			lastAlert = currentTime;
 			hueHelper.setAlert(room, config.lowHpColor());
 		}
 	}

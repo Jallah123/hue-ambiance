@@ -76,8 +76,18 @@ public class MessageOverride implements AmbianceOverride
 	{
 		if (message.contains("Special loot"))
 		{
-			startAction();
-			hueHelper.setColorForDuration(room, config.coxColor(), Duration.ofSeconds(15), stopAction());
+			if(client.getLocalPlayer().getName() != null && message.contains(client.getLocalPlayer().getName()))
+			{
+				startAction();
+				hueHelper.setColorForDuration(room, config.coxColor(), Duration.ofSeconds(15), stopAction());
+			} else
+			{
+				if(config.coxShowOthersPurple())
+				{
+					startAction();
+					hueHelper.setColorForDuration(room, config.coxOthersColor(), Duration.ofSeconds(15), stopAction());
+				}
+			}
 		}
 	}
 

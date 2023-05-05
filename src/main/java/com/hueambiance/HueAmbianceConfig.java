@@ -56,6 +56,13 @@ public interface HueAmbianceConfig extends Config
 	)
 	String colorSection = "colorSection";
 
+	@ConfigSection(
+			name = "Raids",
+			description = "Raid configuration",
+			position = 3
+	)
+	String raidsSection = "raidsSections";
+
 	@ConfigItem(
 		keyName = "ip",
 		name = "Bridge ip",
@@ -143,22 +150,46 @@ public interface HueAmbianceConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "item",
-		name = "Item price threshold",
+		keyName = "itemLow",
+		name = "Low item price threshold",
 		description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
 		position = 4,
 		section = configSection
 	)
-	default int itemPriceThreshold()
+	default int lowItemPriceThreshold()
 	{
-		return 0;
+		return 250_000;
+	}
+
+	@ConfigItem(
+			keyName = "itemMedium",
+			name = "Medium item price threshold",
+			description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
+			position = 5,
+			section = configSection
+	)
+	default int mediumItemPriceThreshold()
+	{
+		return 500_000;
+	}
+
+	@ConfigItem(
+			keyName = "itemHigh",
+			name = "High item price threshold",
+			description = "The price an item must be in order to trigger a notification. A value of 0 will disable notification.",
+			position = 6,
+			section = configSection
+	)
+	default int highItemPriceThreshold()
+	{
+		return 1_000_000;
 	}
 
 	@ConfigItem(
 		keyName = "levelUp",
 		name = "Level up notifier",
 		description = "Enable firework animation on level up",
-		position = 5,
+		position = 7,
 		section = configSection
 	)
 	default boolean levelUpEnabled()
@@ -170,7 +201,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "zulrah",
 		name = "Zulrah custom ambiance",
 		description = "Enables custom ambiance colors for Zulrah",
-		position = 6,
+		position = 8,
 		section = configSection
 	)
 	default boolean zulrahEnabled()
@@ -219,26 +250,39 @@ public interface HueAmbianceConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-		keyName = "itemColor",
-		name = "Item",
-		description = "Color when drop received",
+		keyName = "ItemLowColor",
+		name = "Item low",
+		description = "Color when low value drop received",
 		position = 3,
 		section = colorSection
 	)
-	default Color itemColor()
+	default Color itemLowColor()
 	{
-		return new Color(161, 52, 235);
+		return Color.CYAN;
 	}
 
 	@Alpha
 	@ConfigItem(
-		keyName = "coxColor",
-		name = "Cox unique",
-		description = "Color when drop received",
-		position = 4,
-		section = colorSection
+			keyName = "itemMediumColor",
+			name = "Item medium",
+			description = "Color when medium value drop received",
+			position = 4,
+			section = colorSection
 	)
-	default Color coxColor()
+	default Color itemMediumColor()
+	{
+		return Color.GREEN;
+	}
+
+	@Alpha
+	@ConfigItem(
+			keyName = "itemHighColor",
+			name = "Item high",
+			description = "Color when high value drop received",
+			position = 5,
+			section = colorSection
+	)
+	default Color itemHighColor()
 	{
 		return new Color(161, 52, 235);
 	}
@@ -248,7 +292,7 @@ public interface HueAmbianceConfig extends Config
 		keyName = "cgEnhanced",
 		name = "CG enhanced seed",
 		description = "Color when enhanced weapon seed",
-		position = 5,
+		position = 7,
 		section = colorSection
 	)
 	default Color cgEnhanced()
@@ -261,11 +305,124 @@ public interface HueAmbianceConfig extends Config
 		keyName = "cgArmour",
 		name = "CG armour seed",
 		description = "Color when armour seed is received",
-		position = 6,
+		position = 8,
 		section = colorSection
 	)
 	default Color cgArmour()
 	{
 		return Color.CYAN;
+	}
+	@Alpha
+	@ConfigItem(
+			keyName = "coxOtherPurple",
+			name = "Cox show others drop",
+			description = "Also display color when it's not your drop.",
+			position = 0,
+			section = raidsSection
+	)
+	default boolean coxShowOthersPurple()
+	{
+		return true;
+	}
+	@Alpha
+	@ConfigItem(
+			keyName = "coxColor",
+			name = "Cox drop color",
+			description = "Color when drop received",
+			position = 1,
+			section = raidsSection
+	)
+	default Color coxColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+			keyName = "coxOthersColor",
+			name = "Cox other drop color",
+			description = "Color when someone else received a drop",
+			position = 1,
+			section = raidsSection
+	)
+	default Color coxOthersColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+			keyName = "tobOtherPurple",
+			name = "Tob show others drop",
+			description = "Also display color when it's not your drop.",
+			position = 4,
+			section = raidsSection
+	)
+	default boolean tobShowOthersPurple()
+	{
+		return true;
+	}
+	@Alpha
+	@ConfigItem(
+			keyName = "tobColor",
+			name = "Tob drop color",
+			description = "Color when drop received",
+			position = 5,
+			section = raidsSection
+	)
+	default Color tobColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+			keyName = "tobOthersColor",
+			name = "Tob other drop color",
+			description = "Color when someone else received a drop",
+			position = 6,
+			section = raidsSection
+	)
+	default Color tobOthersColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+			keyName = "toaOtherPurple",
+			name = "Toa show others drop",
+			description = "Also display color when it's not your drop.",
+			position = 7,
+			section = raidsSection
+	)
+	default boolean toaShowOthersPurple()
+	{
+		return true;
+	}
+	@Alpha
+	@ConfigItem(
+			keyName = "toaColor",
+			name = "Toa drop color",
+			description = "Color when drop received",
+			position = 8,
+			section = raidsSection
+	)
+	default Color toaColor()
+	{
+		return new Color(161, 52, 235);
+	}
+
+	@Alpha
+	@ConfigItem(
+			keyName = "toaOthersColor",
+			name = "Toa other drop color",
+			description = "Color when someone else received a drop",
+			position = 9,
+			section = raidsSection
+	)
+	default Color toaOthersColor()
+	{
+		return new Color(161, 52, 235);
 	}
 }

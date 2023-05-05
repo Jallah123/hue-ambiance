@@ -13,6 +13,7 @@ import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.CommandExecuted;
+import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemSpawned;
 import net.runelite.api.events.NpcChanged;
@@ -128,6 +129,12 @@ public class HueAmbiancePlugin extends Plugin
 	public void onItemSpawned(final ItemSpawned itemSpawned)
 	{
 		room.ifPresent(r -> ambianceOverrides.getAll().forEach(override -> override.handleItemSpawned(itemSpawned, r)));
+	}
+
+	@Subscribe
+	public void onGameObjectSpawned(final GameObjectSpawned gameObjectSpawned)
+	{
+		room.ifPresent(r -> ambianceOverrides.getAll().forEach(override -> override.handleGameObjectSpawned(gameObjectSpawned, r)));
 	}
 
 	@Subscribe

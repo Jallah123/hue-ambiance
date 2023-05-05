@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 public class AmbianceOverrides
 {
 	@Inject
-	private HPOverride hpOverride;
+	private HpOverride hpOverride;
 
 	@Inject
 	private PrayerOverride prayerOverride;
@@ -24,10 +24,18 @@ public class AmbianceOverrides
 	@Inject
 	private ZulrahOverride zulrahOverride;
 
+	@Inject
+	private TobOverride tobOverride;
+
+	@Inject
+	private ToaOverride toaOverride;
+
 	// the order in this set makes sure we have the right priority since only 1 override can be active at once
 	public Set<AmbianceOverride> getAll()
 	{
 		return ImmutableSet.of(
+			tobOverride,
+			toaOverride,
 			hpOverride,
 			prayerOverride,
 			messageOverride,

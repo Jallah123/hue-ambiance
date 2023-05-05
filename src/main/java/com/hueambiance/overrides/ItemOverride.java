@@ -33,14 +33,21 @@ public class ItemOverride implements AmbianceOverride
 	@Override
 	public void handleItemSpawned(final ItemSpawned itemSpawned, final Room room)
 	{
-		int itemPriceThreshold = config.itemPriceThreshold();
-		if (itemPriceThreshold > 0)
+		if (config.lowItemPriceThreshold() > 0 || config.mediumItemPriceThreshold() > 0 || config.highItemPriceThreshold() > 0)
 		{
-			int price = itemManager.getItemPrice(itemSpawned.getItem().getId());
-			if (price >= itemPriceThreshold)
+			final int price = itemManager.getItemPrice(itemSpawned.getItem().getId());
+			if(config.highItemPriceThreshold() > 0 && price >= config.highItemPriceThreshold())
 			{
 				active = true;
-				hueHelper.setColorForDuration(room, config.itemColor(), Duration.ofSeconds(5), () -> active = false);
+				hueHelper.setColorForDuration(room, config.itemHighColor(), Duration.ofSeconds(5), () -> active = false);
+			} else if(config.mediumItemPriceThreshold() > 0 && price >= config.mediumItemPriceThreshold())
+			{
+				active = true;
+				hueHelper.setColorForDuration(room, config.itemMediumColor(), Duration.ofSeconds(5), () -> active = false);
+			} else if(config.lowItemPriceThreshold() > 0 && price >= config.lowItemPriceThreshold())
+			{
+				active = true;
+				hueHelper.setColorForDuration(room, config.itemLowColor(), Duration.ofSeconds(5), () -> active = false);
 			}
 		}
 	}

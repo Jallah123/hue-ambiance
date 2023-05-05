@@ -2,6 +2,7 @@ package com.hueambiance;
 
 import io.github.zeroone3010.yahueapi.Room;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemSpawned;
 import net.runelite.api.events.NpcChanged;
@@ -28,6 +29,10 @@ public interface AmbianceOverride
 	}
 
 	default void handleItemSpawned(final ItemSpawned itemSpawned, final Room room)
+	{
+	}
+
+	default void handleGameObjectSpawned(final GameObjectSpawned gameObjectSpawned, final Room room)
 	{
 	}
 }

@@ -24,6 +24,7 @@ public class PrayerOverride implements AmbianceOverride
 	private HueHelper hueHelper;
 
 	private boolean currentlyAlerting = false;
+	private long lastAlert = 0;
 
 	@Override
 	public boolean doesOverride(final Room room)
@@ -43,9 +44,11 @@ public class PrayerOverride implements AmbianceOverride
 	@Override
 	public void handleGameTick(final GameTick gameTick, final Room room)
 	{
-		if (!currentlyAlerting)
+		final long currentTime = System.currentTimeMillis();
+		if (!currentlyAlerting || currentTime - lastAlert > 10_000)
 		{
 			currentlyAlerting = true;
+			lastAlert = currentTime;
 			hueHelper.setAlert(room, config.lowPrayerColor());
 		}
 	}
