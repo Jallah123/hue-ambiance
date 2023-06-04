@@ -36,5 +36,5 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.withType(Jar) {
-   duplicatesStrategy = 'warn'
+   duplicatesStrategy = 'exclude'
 }
